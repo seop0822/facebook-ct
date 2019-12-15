@@ -1,5 +1,5 @@
 <template>
-    <div>asdfasdf</div>
+    <div>start vue</div>
 </template>
 
 <script>
