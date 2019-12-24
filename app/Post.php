@@ -2,8 +2,10 @@
 
 namespace App;
 
+use App\Scopes\ReverseScope;
 use Illuminate\Database\Eloquent\Model;
-use ReverseScope;
+
+
 
 class Post extends Model
 {
