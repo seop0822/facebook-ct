@@ -17,6 +17,14 @@
 
                 <p class="ml-4 text-2xl text-gray-100">{{ user.data.attributes.name }}</p>
             </div>
+
+            <div class="absolute flex items-center bottom-0 right-0 mb-4 mr-12 z-20">
+                <button v-if="friendButtonText"
+                        class="py-1 px-3 bg-gray-400 rounded"
+                        @click="$store.dispatch('sendFriendRequest', $route.params.userId)">
+                    {{ friendButtonText }}
+                </button>
+            </div>
         </div>
 
         <p v-if="postLoading">Loading posts...</p>
@@ -29,6 +37,7 @@
 
 <script>
     import Post from '../../components/Post';
+    import {mapGetters} from 'vuex';
 
     export default {
         name: "Show",
@@ -39,24 +48,13 @@
 
         data: () => {
             return {
-                user: null,
-                posts: null,
                 userLoading: true,
                 postLoading: true,
             }
         },
 
         mounted() {
-            axios.get('/api/users/' + this.$route.params.userId)
-                .then(res => {
-                    this.user = res.data;
-                })
-                .catch(error => {
-                    console.log('Unable to fetch the user from the server.');
-                })
-                .finally(() => {
-                    this.userLoading = false;
-                });
+            this.$store.dispatch('fetchUser', this.$route.params.userId);
 
             axios.get('/api/users/' + this.$route.params.userId + '/posts')
                 .then(res => {
@@ -68,6 +66,13 @@
                 .finally(() => {
                     this.postLoading = false;
                 });
+        },
+
+        computed: {
+            ...mapGetters({
+                user: 'user',
+                friendButtonText: 'friendButtonText',
+            })
         }
     }
 </script>
