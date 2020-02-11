@@ -35,7 +35,7 @@ const mutations = {
         state.newsPosts = posts;
     },
     setPostsStatus(state, status) {
-        state.newPostsStatus = status;
+        state.newsPostsStatus = status;
     }
 };
 

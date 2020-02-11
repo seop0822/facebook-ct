@@ -1996,6 +1996,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "NewPost"
 });
@@ -2116,6 +2117,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
 
 
 
@@ -2130,7 +2132,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   },
   computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapGetters"])({
     posts: 'newsPosts',
-    newsStatus: ' newsStatus'
+    newsStatus: 'newsStatus'
   }))
 });
 
@@ -20168,12 +20170,16 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "flex-1 mx-4" }, [
+    return _c("div", { staticClass: "flex-1 mx-4 flex" }, [
       _c("input", {
         staticClass:
           "w-full pl-4 h-8 bg-gray-200 rounded-full focus:outline-none focus:shadow-outline text-sm",
         attrs: { type: "text", name: "body", placeholder: "Add a post" }
-      })
+      }),
+      _vm._v(" "),
+      _c("button", { staticClass: "bg-gray-200 ml-2 px-3 py-1 rounded-full" }, [
+        _vm._v("Post")
+      ])
     ])
   }
 ]
@@ -20567,7 +20573,7 @@ var render = function() {
           _vm._v(" "),
           _vm.status.posts === "loading"
             ? _c("div", [_vm._v("Loading posts...")])
-            : _vm.posts.data.length < 1
+            : _vm.posts.length < 1
             ? _c("div", [_vm._v("No posts found. Get started")])
             : _vm._l(_vm.posts.data, function(post) {
                 return _c("Post", {
@@ -37218,7 +37224,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _modules_user__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./modules/user */ "./resources/js/store/modules/user.js");
 /* harmony import */ var _modules_title__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./modules/title */ "./resources/js/store/modules/title.js");
 /* harmony import */ var _modules_profile__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./modules/profile */ "./resources/js/store/modules/profile.js");
-!(function webpackMissingModule() { var e = new Error("Cannot find module './modules/posts'"); e.code = 'MODULE_NOT_FOUND'; throw e; }());
+/* harmony import */ var _modules_posts__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./modules/posts */ "./resources/js/store/modules/posts.js");
 
 
 
@@ -37231,9 +37237,62 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vuex__WEBPACK_IMPORTED_MODULE_1__
     User: _modules_user__WEBPACK_IMPORTED_MODULE_2__["default"],
     Title: _modules_title__WEBPACK_IMPORTED_MODULE_3__["default"],
     Profile: _modules_profile__WEBPACK_IMPORTED_MODULE_4__["default"],
-    Post: !(function webpackMissingModule() { var e = new Error("Cannot find module './modules/posts'"); e.code = 'MODULE_NOT_FOUND'; throw e; }())
+    Posts: _modules_posts__WEBPACK_IMPORTED_MODULE_5__["default"]
   }
 }));
+
+/***/ }),
+
+/***/ "./resources/js/store/modules/posts.js":
+/*!*********************************************!*\
+  !*** ./resources/js/store/modules/posts.js ***!
+  \*********************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+var state = {
+  newsPost: null,
+  newsPostsStatus: null
+};
+var getters = {
+  newsPosts: function newsPosts(state) {
+    return state.newsPosts;
+  },
+  newsStatus: function newsStatus(state) {
+    return {
+      newsPostsStatus: state.newsPostsStatus
+    };
+  }
+};
+var actions = {
+  fetchNewsPosts: function fetchNewsPosts(_ref) {
+    var commit = _ref.commit,
+        state = _ref.state;
+    commit('setPostsStatus', 'loading');
+    axios.get('/api/posts').then(function (res) {
+      commit('setPosts', res.data);
+      commit('setPostsStatus', 'success');
+    })["catch"](function (error) {
+      commit('setPostsStatus', 'error');
+    });
+  }
+};
+var mutations = {
+  setPosts: function setPosts(state, posts) {
+    state.newsPosts = posts;
+  },
+  setPostsStatus: function setPostsStatus(state, status) {
+    state.newsPostsStatus = status;
+  }
+};
+/* harmony default export */ __webpack_exports__["default"] = ({
+  state: state,
+  getters: getters,
+  actions: actions,
+  mutations: mutations
+});
 
 /***/ }),
 
