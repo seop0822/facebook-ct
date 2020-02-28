@@ -21,7 +21,6 @@
 </head>
 <body class="bg-gray-400 text-gray-800 antialiased font-sans">
     <div id="app">
-
         <main class="h-screen">
             @yield('content')
         </main>
