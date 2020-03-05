@@ -33,11 +33,16 @@
 
 <script>
     import _ from 'lodash';
+    import { mapGetters} from 'vuex';
 
     export default {
         name: "NewPost",
 
         computed: {
+            ...mapGetters({
+               authUser: 'authUser',
+            }),
+
             postMessage: {
                 get() {
                     return this.$store.getters.postMessage;

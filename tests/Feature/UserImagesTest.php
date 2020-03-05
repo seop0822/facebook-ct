@@ -73,5 +73,39 @@ class UserImagesTest extends TestCase
             'height' => 300,
             'location' => 'cover',
         ])->assertStatus(201);
+
+        $this->post('/api/user-images', [
+            'image' => $file,
+            'width' => 850,
+            'height' => 300,
+            'location' => 'profile',
+        ])->assertStatus(201);
+
+        $response = $this->get('/api/users/'.$user->id);
+
+//        $userImage = UserImage::first();
+        $response->assertJson([
+            'data' => [
+                'type' => 'users',
+                'user_id' => $user->id,
+                'attributes' => [
+                    'cover_image' => [
+                        'data' => [
+                            'type' => 'user-images',
+                            'user_image_id' => 1,
+                            'attributes' => []
+                        ],
+                    ],
+                    'profile_image' => [
+                        'data' => [
+                            'type' => 'user-images',
+                            'user_image_id' => 2,
+                            'attributes' => []
+                        ],
+                    ]
+                ]
+            ],
+        ]);
+
     }
 }
