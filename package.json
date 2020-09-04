@@ -26,6 +26,6 @@
     },
     "dependencies": {
         "dropzone": "^5.7.0",
-        "node-sass": "^4.13.0"
+        "node-sass": "^4.13.1"
     }
 }
